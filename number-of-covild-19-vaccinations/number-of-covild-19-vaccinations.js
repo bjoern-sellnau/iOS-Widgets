@@ -71,7 +71,7 @@ const fontSize2 = 12
 const fontSize3 = 7
 const spacing = 5
 
-const width = 100
+const width = 75
 const h = 9
 
 const thresholds = {  
@@ -129,10 +129,10 @@ function creatProgress(percentage) {
   context.addPath(path1)
   context.fillPath()
 
-  context.setTextAlignedCenter()
-  context.setTextColor(Color.black())
-  context.setFont(Font.systemFont(fontSize - 1))
-  context.drawTextInRect(`${percentage.toLocaleString(Device.language())}`, backgroundReact)
+  #context.setTextAlignedCenter()
+  #context.setTextColor(Color.black())
+  #context.setFont(Font.systemFont(fontSize - 1))
+  #context.drawTextInRect(`${percentage.toLocaleString(Device.language())}`, backgroundReact)
   
   return context.getImage()
 }
@@ -325,6 +325,10 @@ if (config.widgetFamily === 'large') {
     row.addSpacer(4)
     const progressBar = row.addImage(creatProgress(value.fullyVaccinated.quote))
     progressBar.imageSize = new Size(width, h)
+    
+    row.addSpacer()
+    const vaccinatedText = row.addText(`${parseInt(value.fullyVaccinated.quote).toLocaleString(Device.language())}`)
+    vaccinatedText.font = Font.systemFont(fontSize)
   }
   
   stack.addSpacer(2)
@@ -341,6 +345,10 @@ if (config.widgetFamily === 'large') {
   row.addSpacer(4)
   const progressBar = row.addImage(creatProgress(germany.fullyVaccinated.quote))
   progressBar.imageSize = new Size(width, h)
+  
+   row.addSpacer()
+    const vaccinatedText = row.addText(`${parseInt(value.fullyVaccinated.quote).toLocaleString(Device.language())}`)
+    vaccinatedText.font = Font.systemFont(fontSize)
   
   widget.addSpacer(0)
 } else {
