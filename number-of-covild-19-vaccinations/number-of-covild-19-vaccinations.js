@@ -327,7 +327,7 @@ if (config.widgetFamily === 'large') {
     progressBar.imageSize = new Size(width, h)
     
     row.addSpacer(4)
-    const vaccinatedText = row.addText(`${value.fullyVaccinated.quote.toLocaleString(Device.language())} %`)
+    const vaccinatedText = row.addText(`${parseFloat(value.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())} %`)
     vaccinatedText.font = Font.systemFont(fontSize)
   }
   
@@ -347,7 +347,7 @@ if (config.widgetFamily === 'large') {
   progressBar.imageSize = new Size(width, h)
   
     row.addSpacer(4)
-    const vaccinatedText = row.addText(`${germany.fullyVaccinated.quote.toLocaleString(Device.language())} %`)
+    const vaccinatedText = row.addText(`${parseFloat(germany.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())} %`)
     vaccinatedText.font = Font.systemFont(fontSize)
   
   widget.addSpacer(0)
