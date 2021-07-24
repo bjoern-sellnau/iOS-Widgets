@@ -40,7 +40,7 @@ let cacheMinutes = 4 * 60
 
 // enter the path of the field which should be used for sorting in the large widget list.
 // e.g. 'vaccinatedAtLeastOnce.quote' or 'vaccinatedAtLeastOnce.doses'. Default: State name
-const sortBy = 'fullyVacinated.quote'
+const sortBy = 'fullyVaccinated.quote'
 const sortDirection = '' // asc or desc. Default: asc
 
 ////////////////////////////////////////////////////////////////////////////////
