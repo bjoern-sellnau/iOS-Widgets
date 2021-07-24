@@ -129,10 +129,10 @@ function creatProgress(percentage) {
   context.addPath(path1)
   context.fillPath()
 
-  #context.setTextAlignedCenter()
-  #context.setTextColor(Color.black())
-  #context.setFont(Font.systemFont(fontSize - 1))
-  #context.drawTextInRect(`${percentage.toLocaleString(Device.language())}`, backgroundReact)
+  // context.setTextAlignedCenter()
+  // context.setTextColor(Color.black())
+  // context.setFont(Font.systemFont(fontSize - 1))
+  // context.drawTextInRect(`${percentage.toLocaleString(Device.language())}`, backgroundReact)
   
   return context.getImage()
 }
@@ -536,3 +536,14 @@ if (!config.runsInWidget) {
   Script.setWidget(widget)
 }
 Script.complete()
+
+
+
+
+
+
+
+
+
+
+
