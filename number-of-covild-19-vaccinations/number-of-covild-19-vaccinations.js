@@ -211,7 +211,7 @@ function getDiagram(percentage, percentage2) {
     canvTextSize * 1.4 // X-height "* 1.4" so e.g. commas aren't cut off
   )
   canvas.setTextAlignedCenter()
-  canvas.setTextColor(Color.gray())
+  canvas.setTextColor(Color.white())
   canvas.setFont(Font.boldSystemFont(canvTextSize))
   canvas.drawTextInRect(`${Math.round(percentage).toLocaleString(Device.language())}% / ${Math.round(percentage2).toLocaleString(Device.language())}%`, canvTextRect)
 
