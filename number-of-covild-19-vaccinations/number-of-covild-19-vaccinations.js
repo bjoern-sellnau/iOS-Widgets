@@ -40,7 +40,7 @@ let cacheMinutes = 4 * 60
 
 // enter the path of the field which should be used for sorting in the large widget list.
 // e.g. 'vaccinatedAtLeastOnce.quote' or 'vaccinatedAtLeastOnce.doses'. Default: State name
-const sortBy = ''
+const sortBy = 'fullyVacinated.quote'
 const sortDirection = '' // asc or desc. Default: asc
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,7 @@ function creatProgress(percentage) {
   context.fillPath()
 
   context.setTextAlignedCenter()
-  context.setTextColor(Color.white())
+  context.setTextColor(Color.black())
   context.setFont(Font.systemFont(fontSize - 1))
   context.drawTextInRect(`${percentage.toLocaleString(Device.language())}`, backgroundReact)
   
@@ -319,11 +319,11 @@ if (config.widgetFamily === 'large') {
     stateText.lineLimit = 1
     
     row.addSpacer()
-    const quoteText = row.addText(`${parseInt(value.vaccinatedAtLeastOnce.doses).toLocaleString(Device.language())}`)
+    const quoteText = row.addText(`${parseInt(value.fullyVaccinated.doses).toLocaleString(Device.language())}`)
     quoteText.font = Font.systemFont(fontSize)
     
     row.addSpacer(4)
-    const progressBar = row.addImage(creatProgress(value.vaccinatedAtLeastOnce.quote))
+    const progressBar = row.addImage(creatProgress(value.fullyVaccinated.quote))
     progressBar.imageSize = new Size(width, h)
   }
   
@@ -335,11 +335,11 @@ if (config.widgetFamily === 'large') {
   stateText.font = Font.boldSystemFont(fontSize + 1)
     
   row.addSpacer()
-  const quoteText = row.addText(`${parseInt(germany.vaccinatedAtLeastOnce.doses).toLocaleString(Device.language())}`)
+  const quoteText = row.addText(`${parseInt(germany.fullyVaccinated.doses).toLocaleString(Device.language())}`)
   quoteText.font = Font.boldSystemFont(fontSize + 1)
     
   row.addSpacer(4)
-  const progressBar = row.addImage(creatProgress(germany.vaccinatedAtLeastOnce.quote))
+  const progressBar = row.addImage(creatProgress(germany.fullyVaccinated.quote))
   progressBar.imageSize = new Size(width, h)
   
   widget.addSpacer(0)
