@@ -120,9 +120,9 @@ function creatProgress(percentage,step) {
   
   // Progress Path
   let color
-  if (percentage > THRESHOLDES[step].green) {
+  if (percentage > THRESHOLDS[step].green) {
     color = Color.green()
-  } else if (percentage > THRESHOLDES[step].amber) {
+  } else if (percentage > THRESHOLDS[step].amber) {
     color = Color.orange()
   } else {
     color = Color.red()
@@ -181,16 +181,16 @@ function getDiagram(percentage, percentage2) {
   canvas.respectScreenScale = true
   
   let color, color2
-  if (percentage > THRESHOLDES.step1.green) {
+  if (percentage > THRESHOLDS.step1.green) {
     color = Color.green()
-  } else if (percentage > THRESHOLDES.step1.amber) {
+  } else if (percentage > THRESHOLDS.step1.amber) {
     color = Color.orange()
   } else {
     color = Color.red()
   }
-  if (percentage2 > THRESHOLDES.step2.green) {
+  if (percentage2 > THRESHOLDS.step2.green) {
     color2 = Color.green()
-  } else if (percentage > THRESHOLDES.step2.amber) {
+  } else if (percentage > THRESHOLDS.step2.amber) {
     color2 = Color.orange()
   } else {
     color2 = Color.red()
