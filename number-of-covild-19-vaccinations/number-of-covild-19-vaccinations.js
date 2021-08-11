@@ -3,7 +3,7 @@
 // icon-color: red; icon-glyph: syringe;
 /**************
 
-Version 2.0.1
+Version 2.5.0 LD Remix
 
 Changelog:  
   v2.0.1
@@ -71,8 +71,8 @@ const fontSize2 = 12
 const fontSize3 = 7
 const spacing = 5
 
-const width = 75
-const h = 9
+const width = 50
+const h = 11
 
 const THRESHOLDS = {
   step1: {
@@ -93,6 +93,14 @@ if (args.queryParameters.forceUpdate) {
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+function pad(num) {
+  if(num < 10) {
+    return `0${num}`;
+  }
+  
+  return num;
+}
+
 function fetchFromObject(obj, prop) {
     if(typeof obj === 'undefined') {
         return false;
@@ -104,7 +112,7 @@ function fetchFromObject(obj, prop) {
     return obj[prop];
 }
 
-function creatProgress(percentage,step) {
+function creatProgress(percentage,percentageOnce) {
   const context = new DrawContext()
   context.size = new Size(width, h)
   context.opaque = false
@@ -112,33 +120,53 @@ function creatProgress(percentage,step) {
   
   // Background Path
   context.setFillColor(Color.gray())
+  
   const path = new Path()
   const backgroundReact = new Rect(0, 0, width, h)
   path.addRect(backgroundReact)
   context.addPath(path)
   context.fillPath()
   
-  // Progress Path
+    // Progress Path once
+  let colorOnce
+  if (percentageOnce > THRESHOLDS.step1.green) {
+    colorOnce = new Color('#cc00cc',100)
+  } else if (percentageOnce > THRESHOLDS.step1.amber) {
+    colorOnce = new Color('#ff7816',100)
+  } else {
+    colorOnce = new Color('#cc0000',100)
+  }
+  
+  context.setFillColor(colorOnce)  
+  const path1 = new Path()
+  const path1width = (width * (percentageOnce / 100) > width) ? width : width * (percentageOnce / 100)
+  path1.addRect(new Rect(0, 0, path1width, h))
+  context.addPath(path1)
+  context.fillPath()
+  
+  // Progress Path full
   let color
-  if (percentage > THRESHOLDS[step].green) {
+  if (percentage > THRESHOLDS.step2.green) {
     color = Color.green()
-  } else if (percentage > THRESHOLDS[step].amber) {
+  } else if (percentage > THRESHOLDS.step2.amber) {
     color = Color.orange()
   } else {
     color = Color.red()
   }
   
   context.setFillColor(color)  
-  const path1 = new Path()
-  const path1width = (width * (percentage / 100) > width) ? width : width * (percentage / 100)
-  path1.addRect(new Rect(0, 0, path1width, h))
-  context.addPath(path1)
+  const path1Full = new Path()
+  const path1widthFull = (width * (percentage / 100) > width) ? width : width * (percentage / 100)
+  path1Full.addRect(new Rect(0, 0, path1widthFull, h))
+  context.addPath(path1Full)
   context.fillPath()
 
-  // context.setTextAlignedCenter()
-  // context.setTextColor(Color.black())
-  // context.setFont(Font.systemFont(fontSize - 1))
-  // context.drawTextInRect(`${percentage.toLocaleString(Device.language())}`, backgroundReact)
+  //context.setTextAlignedCenter()
+  
+  //context.setTextAlignedRight()
+  //context.setTextColor(Color.black())
+  //context.setFont(Font.heavySystemFont(fontSize - 1))
+  //context.drawTextInRect(`${percentageOnce} | ${percentage} % `, backgroundReact)
   
   return context.getImage()
 }
@@ -317,10 +345,11 @@ if (config.widgetFamily === 'large') {
     }
   })
   
+  let place = 1;
   for (const value of list) {
     const row = stack.addStack()
     row.layoutHorizontally()
-    const stateText = row.addText(value.name)
+    const stateText = row.addText(`${pad(place)}. ${value.name}`)
     stateText.font = Font.mediumSystemFont(fontSize)
     stateText.lineLimit = 1
     
@@ -329,12 +358,16 @@ if (config.widgetFamily === 'large') {
     quoteText.font = Font.systemFont(fontSize)
     
     row.addSpacer(4)
-    const progressBar = row.addImage(creatProgress(value.fullyVaccinated.quote))
+    const progressBar = row.addImage(creatProgress(value.fullyVaccinated.quote,value.vaccinatedAtLeastOnce.quote))
     progressBar.imageSize = new Size(width, h)
     
     row.addSpacer(4)
-    const vaccinatedText = row.addText(`${parseFloat(value.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())} %`)
+    //const vaccinatedText = row.addText(`${parseFloat(value.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())}`)
+    
+    const vaccinatedText = row.addText(`${parseFloat(value.vaccinatedAtLeastOnce.quote).toFixed(2).toLocaleString(Device.language())} | ${parseFloat(value.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())}`)
     vaccinatedText.font = Font.systemFont(fontSize)
+    
+    place++;
   }
   
   stack.addSpacer(2)
@@ -349,11 +382,13 @@ if (config.widgetFamily === 'large') {
   quoteText.font = Font.boldSystemFont(fontSize + 1)
     
   row.addSpacer(4)
-  const progressBar = row.addImage(creatProgress(germany.fullyVaccinated.quote))
+  const progressBar = row.addImage(creatProgress(germany.fullyVaccinated.quote,germany.vaccinatedAtLeastOnce.quote))
   progressBar.imageSize = new Size(width, h)
   
     row.addSpacer(4)
-    const vaccinatedText = row.addText(`${parseFloat(germany.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())} %`)
+    //const vaccinatedText = row.addText(`${parseFloat(germany.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())}`)
+  
+    const vaccinatedText = row.addText(`${parseFloat(germany.vaccinatedAtLeastOnce.quote).toFixed(2).toLocaleString(Device.language())} | ${parseFloat(germany.fullyVaccinated.quote).toFixed(2).toLocaleString(Device.language())}`)
     vaccinatedText.font = Font.systemFont(fontSize)
   
   widget.addSpacer(0)
