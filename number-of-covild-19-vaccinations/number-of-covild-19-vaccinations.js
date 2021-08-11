@@ -74,9 +74,15 @@ const spacing = 5
 const width = 75
 const h = 9
 
-const thresholds = {  
-  amber: 59,
-  green: 79
+const THRESHOLDS = {
+  step1: {
+    amber: 85,
+    green: 95
+  },
+  step2:{
+    amber: 75,
+    green: 85
+  }
 }
 
 if (args.queryParameters.forceUpdate) {    
@@ -98,7 +104,7 @@ function fetchFromObject(obj, prop) {
     return obj[prop];
 }
 
-function creatProgress(percentage) {
+function creatProgress(percentage,step) {
   const context = new DrawContext()
   context.size = new Size(width, h)
   context.opaque = false
@@ -114,9 +120,9 @@ function creatProgress(percentage) {
   
   // Progress Path
   let color
-  if (percentage > thresholds.green) {
+  if (percentage > THRESHOLDES[step].green) {
     color = Color.green()
-  } else if (percentage > thresholds.amber) {
+  } else if (percentage > THRESHOLDES[step].amber) {
     color = Color.orange()
   } else {
     color = Color.red()
@@ -175,16 +181,16 @@ function getDiagram(percentage, percentage2) {
   canvas.respectScreenScale = true
   
   let color, color2
-  if (percentage > thresholds.green) {
+  if (percentage > THRESHOLDES.step1.green) {
     color = Color.green()
-  } else if (percentage > thresholds.amber) {
+  } else if (percentage > THRESHOLDES.step1.amber) {
     color = Color.orange()
   } else {
     color = Color.red()
   }
-  if (percentage2 > thresholds.green) {
+  if (percentage2 > THRESHOLDES.step2.green) {
     color2 = Color.green()
-  } else if (percentage > thresholds.amber) {
+  } else if (percentage > THRESHOLDES.step2.amber) {
     color2 = Color.orange()
   } else {
     color2 = Color.red()
